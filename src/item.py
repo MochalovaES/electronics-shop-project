@@ -20,6 +20,13 @@ class Item:
         self.price = price
         self.quantity = quantity
 
+    def __repr__(self):
+        name = "'" + self.__name + "'"
+        return f"{self.__class__.__name__}({name}, {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f"{self.__name}"
+
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
@@ -63,4 +70,4 @@ class Item:
         if string.isdigit():
             return int(string)
         else:
-            return int(string.split('.')[0])
+            return int(float(string))
