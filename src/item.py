@@ -1,7 +1,8 @@
+from abc import ABC
 import csv
 
 
-class Item:
+class Item(ABC):
     """
     Класс для представления товара в магазине.
     """
@@ -19,6 +20,7 @@ class Item:
         self.__name = name
         self.price = price
         self.quantity = quantity
+        super().__init__()
 
     def __repr__(self):
         name = "'" + self.__name + "'"
@@ -79,3 +81,5 @@ class Item:
             return int(string)
         else:
             return int(float(string))
+
+
