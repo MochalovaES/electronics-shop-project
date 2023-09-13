@@ -2,7 +2,7 @@ from src.item import Item
 
 
 class Mixin:
-    def __int__(self, name, price, quantity, language='EN'):
+    def __init__(self):
         self.__language = 'EN'
 
     @property
