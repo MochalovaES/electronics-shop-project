@@ -22,6 +22,10 @@ def test_apply_discount():
 def test_instantiate_from_csv():
     Item.instantiate_from_csv()
     assert len(Item.all) == 5
+    file_error_1 = 'items1.csv'
+    assert Item.instantiate_from_csv(file_error_1) == 'Отсутствует файл item.csv'
+    file_error_2 = 'items2.csv'
+    assert Item.instantiate_from_csv(file_error_2) == 'Файл item.csv поврежден'
 
 
 def test_string_to_number():

@@ -67,10 +67,17 @@ class Item(ABC):
         """
         класс-метод, инициализирующий экземпляры класса Item данными из файла src/items.csv
         """
-        with open('../src/items.csv', newline='', encoding='windows-1251') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                Item.all.append(cls(row['name'], row['price'], row['quantity']))
+        try:
+            with open('../src/items.csv', newline='', encoding='windows-1251') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    Item.all.append(cls(row['name'], row['price'], row['quantity']))
+        except InstantiateCSVError:
+                print('Файл item.csv поврежден')
+        except FileNotFoundError:
+                print('Отсутствует файл item.csv')
+
+
 
     @staticmethod
     def string_to_number(string):
@@ -81,5 +88,8 @@ class Item(ABC):
             return int(string)
         else:
             return int(float(string))
+
+
+
 
 
