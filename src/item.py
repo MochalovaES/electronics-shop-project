@@ -2,6 +2,11 @@ from abc import ABC
 import csv
 
 
+class InstantiateCSVError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
 class Item(ABC):
     """
     Класс для представления товара в магазине.
@@ -72,12 +77,10 @@ class Item(ABC):
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     Item.all.append(cls(row['name'], row['price'], row['quantity']))
-        except InstantiateCSVError:
-                print('Файл item.csv поврежден')
+        except KeyError:
+            raise InstantiateCSVError('Файл item.csv поврежден')
         except FileNotFoundError:
-                print('Отсутствует файл item.csv')
-
-
+            raise FileNotFoundError('Отсутствует файл item.csv')
 
     @staticmethod
     def string_to_number(string):
