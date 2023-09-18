@@ -13,6 +13,7 @@ class Item(ABC):
     """
     pay_rate = 1.0
     all = []
+    filename = '../src/items.csv'
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -68,12 +69,12 @@ class Item(ABC):
             self.__name = name_string[:10]
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, file=filename):
         """
         класс-метод, инициализирующий экземпляры класса Item данными из файла src/items.csv
         """
         try:
-            with open('../src/items.csv', newline='', encoding='windows-1251') as csvfile:
+            with open(file, newline='', encoding='windows-1251') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     Item.all.append(cls(row['name'], row['price'], row['quantity']))
