@@ -1,8 +1,16 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
+from pathlib import Path
+
 import pytest
 
-from src.item import Item
+
+from src.item import Item, InstantiateCSVError
 from src.phone import Phone
+
+ROOT_PATH = Path(__file__).parent.parent
+SRC_PATH = Path.joinpath(ROOT_PATH, 'src')
+ITEM_CSV = Path.joinpath(SRC_PATH, 'item.csv')
+ITEM_ERROR_CSV = Path.joinpath(SRC_PATH, 'item_error.csv')
 
 
 def test_calculate_total_price():
@@ -29,11 +37,11 @@ def test_instantiate_from_csv():
 def test_test_instantiate_from_csv_error():
     with pytest.raises(FileNotFoundError):
         item1 = Item("Смартфон", 10000, 20)
-        item1.instantiate_from_csv('../src/item.csv')
+        item1.instantiate_from_csv('bad_path')
 
-    with pytest.raises(KeyError):
+    with pytest.raises(InstantiateCSVError):
         item2 = Item("Ноутбук", 20000, 5)
-        item2.instantiate_from_csv('../src/item_error.csv')
+        item2.instantiate_from_csv(ITEM_ERROR_CSV)
 
 
 def test_string_to_number():
